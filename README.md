@@ -27,7 +27,7 @@ Some settings can be changed in the `shadowCA.cfg` file to fit your environment.
 
 The script will try to detect if a CA is already present (and abort if). If run successfull you will get a similar output like the following:
 
-```bash
+```
 Config file is unclean, cleaning it...
 
 Generate Private Key ...
@@ -59,7 +59,7 @@ The pass phrase for the CA is used to sign your CA and all certificates you crea
 ### Create certificates
 With just the single command `create_certificate.sh` you are able to create now host certificates to be used for all kind server and services. Without any argument it will just gives you a small hint that something is missing and how to get help `-?` will provide you the following:
 
-```bash
+```
 
   This script will generate certificates, sign them with your shadowCA and write them to
 
@@ -71,8 +71,51 @@ With just the single command `create_certificate.sh` you are able to create now 
 
 The first provided hostname will be used as _common name_ and all additional will be used as _alternative names_. By default `127.0.0.1` is added as IP _alternative name_ and additional IPs can be added too.
 
+Succesfull run could look like the following
+
+```
+bash bin/create_certificate.sh -h nuci3.local.lan -h nuci3.lan -h nuci3.local
+Config file is unclean, cleaning it...
+DNS:nuci3.lan,DNS:nuci3.local,DNS:nuci3.local.lan,IP:127.0.0.1
+DNS:nuci3.lan
+nuci3.local.lan
+IP:127.0.0.1
+Created /Users/jd/bench/shadowCA/cert/nuci3.local.lan ...
+... create private Key for nuci3.local.lan
+Generating RSA private key, 2048 bit long modulus
+...........................................................................................................................................................................+++
+.....+++
+e is 65537 (0x10001)
+... write configuration for nuci3.local.lan ...
+... create Certificate Request for nuci3.local.lan ...
+... prepare sign of nuci3.local.lan request ...
+... sign of nuci3.local.lan request ...
+Signature ok
+subject=/C=DE/ST=NRW/L=Herne/O=shadowCA/OU=Support shadowCA/CN=nuci3.local.lan/emailAddress=jd@jalogis.ch
+Getting CA Private Key
+Enter pass phrase for /Users/jd/bench/shadowCA/cert/CA/shadowCA.key:
+created /Users/jd/bench/shadowCA/cert/nuci3.local.lan/nuci3.local.lan that contains all needed files
+
+total 48
+drwxr-xr-x  8 jd  staff   256 12 Feb 13:40 .
+drwxr-xr-x  5 jd  staff   160 12 Feb 13:40 ..
+-rw-r--r--  1 jd  staff   203 12 Feb 13:40 nuci3.local.lan.cnf
+-rw-r--r--  1 jd  staff  1712 12 Feb 13:40 nuci3.local.lan.crt
+-rw-r--r--  1 jd  staff  1062 12 Feb 13:40 nuci3.local.lan.csr
+-rw-r--r--  1 jd  staff   221 12 Feb 13:40 nuci3.local.lan.ext
+-rw-r--r--  1 jd  staff  1675 12 Feb 13:40 nuci3.local.lan.key
+-rw-r--r--  1 jd  staff  3387 12 Feb 13:40 nuci3.local.lan.pem
+``` 
+
+
+## Missing
+
+- error handling for certificate creation (wrong password)
+- create a java keystore that can be used
+- revoke certificates
+- renew certificates
+
 ## WARNING
 <aside class="warning">
-This scripts are not written to be a solid production CA for your environment, more to kickstart your POC. Use this on your own risk.
+This scripts are not written to be a solid production CA for your environment, more to kickstart your POC. **Use this on your own risk**.
 </aside>
-
