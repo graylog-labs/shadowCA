@@ -67,7 +67,6 @@ if [ -n "${HELPME}" ]; then
       -h  to set Hostnames (can be used multiple times)
       -i  to set IP Adresses (can be used multiple times)
       -d  (optional) Number of Days the certificate is valid (default=365)
-      -s  (optional) The secret that is used for the crypted key (default=secret)
   "
   exit 0
 
@@ -88,10 +87,6 @@ if [ -z "${VALIDDAYS}" ]; then
   VALIDDAYS=365
 fi
 
-# if no Key provided, set default secret
-if [ -z "${KEYSECRET}" ]; then
-  KEYSECRET=secret
-fi
 
 # sort array entries and make them uniq
 NAMES=($(printf "DNS:%q\n" "${HNAME[@]}" | sort -u))
@@ -167,10 +162,7 @@ openssl req -new -config ${WDIR}/${CRTNAME}.cnf -key ${WDIR}/${CRTNAME}.key -out
 
 echo "... prepare sign of ${CRTNAME} request ..."
 # create .ext file
-#
-# if additinonal alt_names are needed, just add them
-# with the following number in sequence
-
+# alt_names are added here
 cat << EOF > ${WDIR}/${CRTNAME}.ext
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
@@ -180,7 +172,7 @@ EOF
 
 echo "... sign of ${CRTNAME} request ..."
 # create the certificate
-openssl x509 -req -in ${WDIR}/${CRTNAME}.csr -CA "${CACERTDIR}"/"${CANAME}".pem -CAkey "${CACERTDIR}"/"${CANAME}".key -CAcreateserial -out ${WDIR}/${CRTNAME}.crt -days "${CAVDAYS}" -sha256 -extfile ${WDIR}/${CRTNAME}.ext
+openssl x509 -req -in ${WDIR}/${CRTNAME}.csr -CA "${CACERTDIR}"/"${CANAME}".pem -CAkey "${CACERTDIR}"/"${CANAME}".key -CAcreateserial -out ${WDIR}/${CRTNAME}.crt -days "${VALIDDAYS}" -sha256 -extfile ${WDIR}/${CRTNAME}.ext
 # create certificate pem
 # or fullchain certificate
 cat ${WDIR}/${CRTNAME}.crt ${WDIR}/${CRTNAME}.key > ${WDIR}/${CRTNAME}.pem
