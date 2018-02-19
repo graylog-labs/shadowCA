@@ -97,11 +97,6 @@ IPADD=($(printf "IP:%q\n" "${HIP[@]}" | sort -u))
 SUBALT=$(IFS=','; echo "${NAMES[*]},${IPADD[*]}")
 
 
-echo "${SUBALT}"
-echo "${NAMES}"
-echo "${HNAME}"
-echo "${IPADD}"
-
 ######
 # WORK STARTS
 ######
@@ -157,7 +152,7 @@ EOF
 
 echo "... create Certificate Request for ${CRTNAME} ..."
 # create csr
-openssl req -new -config ${WDIR}/${CRTNAME}.cnf -key ${WDIR}/${CRTNAME}.key -out ${WDIR}/${CRTNAME}.csr
+${SSLBIN} req -new -config ${WDIR}/${CRTNAME}.cnf -key ${WDIR}/${CRTNAME}.key -out ${WDIR}/${CRTNAME}.csr
 
 
 echo "... prepare sign of ${CRTNAME} request ..."
@@ -172,7 +167,7 @@ EOF
 
 echo "... sign of ${CRTNAME} request ..."
 # create the certificate
-openssl x509 -req -in ${WDIR}/${CRTNAME}.csr -CA "${CACERTDIR}"/"${CANAME}".pem -CAkey "${CACERTDIR}"/"${CANAME}".key -CAcreateserial -out ${WDIR}/${CRTNAME}.crt -days "${VALIDDAYS}" -sha256 -extfile ${WDIR}/${CRTNAME}.ext
+${SSLBIN} x509 -req -in ${WDIR}/${CRTNAME}.csr -CA "${CACERTDIR}"/"${CANAME}".pem -CAkey "${CACERTDIR}"/"${CANAME}".key -CAcreateserial -out ${WDIR}/${CRTNAME}.crt -days "${VALIDDAYS}" -sha256 -extfile ${WDIR}/${CRTNAME}.ext
 # create certificate pem
 # or fullchain certificate
 cat ${WDIR}/${CRTNAME}.crt ${WDIR}/${CRTNAME}.key > ${WDIR}/${CRTNAME}.pem
