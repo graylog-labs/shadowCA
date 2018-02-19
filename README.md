@@ -76,10 +76,7 @@ Succesfull run could look like the following
 ```
 bash bin/create_certificate.sh -h nuci3.local.lan -h nuci3.lan -h nuci3.local
 Config file is unclean, cleaning it...
-DNS:nuci3.lan,DNS:nuci3.local,DNS:nuci3.local.lan,IP:127.0.0.1
-DNS:nuci3.lan
-nuci3.local.lan
-IP:127.0.0.1
+
 Created /Users/jd/bench/shadowCA/cert/nuci3.local.lan ...
 ... create private Key for nuci3.local.lan
 Generating RSA private key, 2048 bit long modulus
