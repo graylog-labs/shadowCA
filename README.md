@@ -56,6 +56,25 @@ This is needed on all System that should trust this CA.
 
 The pass phrase for the CA is used to sign your CA and all certificates you create with the included scripts. Keep that in mind, as we do not include any script to reset this key. 
 
+### Install CA on Systems
+
+
+#### Debian / Ubuntu
+
+Copy `shadowCA.pem` to dir `/usr/local/share/ca-certificates/`
+Use command like: `sudo cp cert/CA/shadowCA.pem /usr/local/share/ca-certificates/shadowCA.pem`
+Update the CA store: `sudo update-ca-certificates`
+
+#### CentOS / RedHat
+
+Install the ca-certificates package: `yum install ca-certificates`
+Enable the dynamic CA configuration feature: `update-ca-trust force-enable`
+Add it as a new file to /etc/pki/ca-trust/source/anchors/: `cp cert/CA/shadowCA.pem /etc/pki/ca-trust/source/anchors/`
+Use command: `update-ca-trust extract`
+
+
+
+
 ### Create certificates
 With just the single command `create_certificate.sh` you are able to create now host certificates to be used for all kind server and services. Without any argument it will just gives you a small hint that something is missing and how to get help `-?` will provide you the following:
 
