@@ -58,6 +58,7 @@ The pass phrase for the CA is used to sign your CA and all certificates you crea
 
 ### Install CA on Systems
 
+Detailed configurations to add or remove the CA certificate from various Systems is documented in [docs/add_ca_to_truststore.md](docs/add_ca_to_truststore.md). Details for the most common Linux distributions below.
 
 #### Debian / Ubuntu
 
