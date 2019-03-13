@@ -6,7 +6,7 @@ Create a CA and Certificates to use in your Infrastructure
 It becomes more and more important to have your infrastructure communication secured with certificates.
 Not every environment provide a [CA](https://en.wikipedia.org/wiki/Certificate_authority) that can easily be used for that infrastructure. 
 
-Taking [shadow it](https://en.wikipedia.org/wiki/Shadow_IT) and implement that might not be best practice but it is supposted to 'just works' and theirfore is used in production.
+Taking [shadow it](https://en.wikipedia.org/wiki/Shadow_IT) and implement that might not be best practice but it is supposted to 'just works' and therefore is used in production.
 
 <aside class="notice">
 The scripts in this repository should give you the option of POC usage and might be used in production - but was never build for that.
