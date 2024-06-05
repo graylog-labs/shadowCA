@@ -74,7 +74,7 @@ echo -e "\nGenerate Private Key ... \n choose a strong CA Password if requested!
 
 # generate root certificate
 echo -e  "\nSign ROOT Certificate with your previous entered CA Password ... \n "
-"${SSLBIN}" req -x509 -new -nodes -key "${CACERTDIR}"/"${CANAME}".key -sha256 -days "${CAVDAYS}" -config "${CACERTDIR}"/"${CANAME}".cnf -out "${CACERTDIR}"/"${CANAME}".pem
+"${SSLBIN}" req -addext basicConstraints=critical,CA:TRUE,pathlen:1 -x509 -new -nodes -key "${CACERTDIR}"/"${CANAME}".key -sha256 -days "${CAVDAYS}" -config "${CACERTDIR}"/"${CANAME}".cnf -out "${CACERTDIR}"/"${CANAME}".pem
 
 # create DER from ca.pem
 echo -e "\nCreate DER from ${CACERTDIR}/${CANAME}.pem "
